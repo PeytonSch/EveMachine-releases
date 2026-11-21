@@ -81,6 +81,24 @@
     .meta { margin-top: 16px; font-size: 14px; color: var(--text-faint); }
     .meta strong { color: var(--text-dim); font-weight: 600; }
 
+    .hero-shot {
+      display: block; margin: 48px auto 0; max-width: 1040px;
+      border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 74, 58, 0.08);
+    }
+    .hero-shot img, .tour img { display: block; width: 100%; height: auto; }
+    .tour { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 24px; }
+    .tour figure { margin: 0; }
+    .tour figure:last-child:nth-child(odd) { grid-column: 1 / -1; max-width: calc(50% - 12px); justify-self: center; }
+    .tour a { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; transition: border-color 0.15s, transform 0.15s; }
+    .tour a:hover { border-color: #33415f; transform: translateY(-2px); }
+    .tour figcaption { margin-top: 10px; font-size: 14.5px; color: var(--text-dim); }
+    .tour figcaption strong { color: var(--text); }
+    @media (max-width: 760px) {
+      .tour { grid-template-columns: 1fr; }
+      .tour figure:last-child:nth-child(odd) { max-width: none; }
+    }
+
     section { padding: 64px 0; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
     h2 { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.01em; }
     .sub { color: var(--text-dim); margin: 0 0 32px; }
@@ -139,6 +157,7 @@
     <div class="wrap">
       <a class="brand" href="#"><img src="icon.svg" alt="">Eve Machine</a>
       <nav>
+        <a href="#tour">Screenshots</a>
         <a href="#features">Features</a>
         <a href="#install">Install</a>
         <a href="#whats-new">What's new</a>
@@ -161,8 +180,40 @@
           <a class="btn btn-ghost" href="https://github.com/PeytonSch/EveMachine-releases/releases">All releases</a>
         </div>
         <div class="meta" id="release-meta">Windows 10 and 11, 64-bit · Free</div>
+        <a class="hero-shot" href="screenshots/overview.jpg">
+          <img src="screenshots/overview.jpg" width="1920" height="1201" alt="Eve Machine's Overview tab: wallet, assets, industry jobs, planets and market orders across three characters, with a list of what needs attention and what's coming up in the next 48 hours.">
+        </a>
       </div>
     </div>
+
+    <section id="tour">
+      <div class="wrap">
+        <h2>Take a look</h2>
+        <p class="sub">Screenshots from the app's demo mode, with made-up characters. Click any of them to see it full size.</p>
+        <div class="tour">
+          <figure>
+            <a href="screenshots/assets.jpg"><img src="screenshots/assets.jpg" width="1920" height="1201" loading="lazy" alt="Asset Manager: everything the characters own, grouped by station, with categories, quantities and market values."></a>
+            <figcaption><strong>Assets.</strong> Everything you own, grouped by station and valued at market prices.</figcaption>
+          </figure>
+          <figure>
+            <a href="screenshots/industry.jpg"><img src="screenshots/industry.jpg" width="1920" height="1201" loading="lazy" alt="Industry Planner: a Caracal blueprint with ME/TE, facility, materials needed, what's in stock and estimated profit."></a>
+            <figcaption><strong>Industry.</strong> Plan a build: materials, what you already have, costs and profit.</figcaption>
+          </figure>
+          <figure>
+            <a href="screenshots/market.jpg"><img src="screenshots/market.jpg" width="1920" height="1201" loading="lazy" alt="Market Browser: a watchlist with buy and sell prices and spreads at Jita."></a>
+            <figcaption><strong>Market.</strong> Live hub prices, spreads and history for your watchlist.</figcaption>
+          </figure>
+          <figure>
+            <a href="screenshots/planetary.jpg"><img src="screenshots/planetary.jpg" width="1920" height="1201" loading="lazy" alt="Planetary Industry dashboard: daily profit, customs tax, problems in the chain and a chart of value over time."></a>
+            <figcaption><strong>Planetary.</strong> What your colonies earn, what's stopped, and how value builds up.</figcaption>
+          </figure>
+          <figure>
+            <a href="screenshots/mining.jpg"><img src="screenshots/mining.jpg" width="1920" height="1201" loading="lazy" alt="Mining ledger: ISK mined per day by ore, pilots, ores mined and where."></a>
+            <figcaption><strong>Mining.</strong> Your ledger by day, ore, pilot and system, valued as you like.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
     <section id="features">
       <div class="wrap">
