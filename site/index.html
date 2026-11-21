@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eve Machine</title>
+  <meta name="description" content="A free desktop companion for EVE Online on Windows: assets, industry, market, mining, planetary and local intel in one place.">
+  <meta property="og:title" content="Eve Machine">
+  <meta property="og:description" content="A free desktop companion for EVE Online on Windows: assets, industry, market, mining, planetary and local intel in one place.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <meta name="theme-color" content="#070a12">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <style>
+    :root {
+      --bg: #070a12;
+      --bg-raised: #0d1322;
+      --bg-card: #111a2d;
+      --line: #1f2a44;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-faint: #64748b;
+      --accent: #ff4a3a;
+      --accent-hover: #ff6a52;
+      --accent-ink: #1a0303;
+      --link: #67e8f9;
+      --radius: 14px;
+      --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+    header.top {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(7, 10, 18, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    header.top .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; letter-spacing: 0.01em; }
+    .brand:hover { text-decoration: none; }
+    .brand img { width: 30px; height: 30px; }
+    nav { margin-left: auto; display: flex; gap: 20px; font-size: 14px; }
+    nav a { color: var(--text-dim); }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    .hero { padding: 88px 0 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: -40% -20% auto; height: 640px;
+      background: radial-gradient(closest-side, rgba(255, 74, 58, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .hero > .wrap { position: relative; }
+    .hero img.logo { width: 112px; height: 112px; filter: drop-shadow(0 12px 40px rgba(255, 74, 58, 0.35)); }
+    .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 20px 0 14px; letter-spacing: -0.02em; }
+    .hero p.lead { font-size: clamp(17px, 2.2vw, 20px); color: var(--text-dim); max-width: 640px; margin: 0 auto 32px; }
+    .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 26px; border-radius: 999px; font-weight: 650; font-size: 16px;
+      border: 1px solid transparent; transition: background 0.15s, border-color 0.15s;
+    }
+    .btn:hover { text-decoration: none; }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost { border-color: var(--line); color: var(--text); background: var(--bg-raised); }
+    .btn-ghost:hover { border-color: #33415f; }
+    .btn svg { width: 20px; height: 20px; flex: none; }
+    .meta { margin-top: 16px; font-size: 14px; color: var(--text-faint); }
+    .meta strong { color: var(--text-dim); font-weight: 600; }
+
+    section { padding: 64px 0; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
+    h2 { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.01em; }
+    .sub { color: var(--text-dim); margin: 0 0 32px; }
+
+    .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .feature { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+    .feature h3 { margin: 0 0 4px; font-size: 16px; }
+    .feature p { margin: 0; color: var(--text-dim); font-size: 14.5px; }
+
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .two .aside { padding-top: 98px; }
+    @media (max-width: 760px) {
+      .two { grid-template-columns: 1fr; }
+      .two .aside { padding-top: 0; }
+      nav { display: none; }
+    }
+    ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+    ol.steps li { counter-increment: step; position: relative; padding: 0 0 18px 44px; color: var(--text-dim); }
+    ol.steps li strong { color: var(--text); }
+    ol.steps li::before {
+      content: counter(step); position: absolute; left: 0; top: 0;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 14px; font-weight: 700;
+      background: var(--bg-card); border: 1px solid var(--line); color: var(--text);
+    }
+    .note {
+      background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid #f59e0b;
+      border-radius: 10px; padding: 14px 16px; font-size: 14.5px; color: var(--text-dim);
+    }
+    .note strong { color: var(--text); }
+    .note + .note { margin-top: 12px; }
+    code, .mono { font-family: var(--mono); font-size: 0.88em; }
+    .hash { word-break: break-all; color: var(--text); }
+
+    .notes {
+      background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 4px 24px 18px; color: var(--text-dim); font-size: 15px;
+    }
+    .notes h3 { color: var(--text); font-size: 15px; margin: 18px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .notes ul { margin: 0; padding-left: 20px; }
+    .notes li { margin: 4px 0; }
+    .notes strong { color: var(--text); }
+    .notes .loading { padding: 18px 0 0; }
+
+    ul.plain { margin: 0; padding-left: 20px; color: var(--text-dim); }
+    ul.plain li { margin: 6px 0; }
+    ul.plain strong { color: var(--text); }
+
+    footer { border-top: 1px solid var(--line); padding: 40px 0 56px; color: var(--text-faint); font-size: 13px; }
+    footer .links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 18px; font-size: 14px; }
+    footer p { margin: 0; max-width: 860px; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#"><img src="icon.svg" alt="">Eve Machine</a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+        <a href="#whats-new">What's new</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <img class="logo" src="icon.svg" alt="Eve Machine logo">
+        <h1>Eve Machine</h1>
+        <p class="lead">A free desktop companion for EVE Online. Log in your characters once and see where your stuff is, what it's worth, what to build, what you mined and who just jumped into local.</p>
+        <div class="cta">
+          <a class="btn btn-primary" id="download" href="https://github.com/PeytonSch/EveMachine-releases/releases/latest/download/EveMachine-Setup.exe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/PeytonSch/EveMachine-releases/releases">All releases</a>
+        </div>
+        <div class="meta" id="release-meta">Windows 10 and 11, 64-bit · Free</div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="wrap">
+        <h2>Everything about your characters, in one place</h2>
+        <p class="sub">Every tab links to the others: click an item to see its market, where you own it, or how to build it.</p>
+        <div class="features">
+          <div class="feature"><h3>Overview</h3><p>What needs your attention today across all your characters.</p></div>
+          <div class="feature"><h3>Assets</h3><p>Everything your characters own (and your corporation's, with the Director role), searchable by item, place and owner, with market values.</p></div>
+          <div class="feature"><h3>Market</h3><p>Prices, price history, trade hub comparison, and how your open orders stand against the competition.</p></div>
+          <div class="feature"><h3>Industry</h3><p>Blueprint planner, material trees, stockpiles, build goals and production pipelines.</p></div>
+          <div class="feature"><h3>Mining</h3><p>Your mining ledger, plus live m³ per hour, ISK per hour and ore hold alerts read from your game logs.</p></div>
+          <div class="feature"><h3>Planetary</h3><p>Colony status, extraction timers, production planning and what your planets earn.</p></div>
+          <div class="feature"><h3>Local Intel</h3><p>Paste local chat to see each pilot's threat level, known gankers and recent kills nearby.</p></div>
+          <div class="feature"><h3>Combat &amp; Missions</h3><p>Damage, hits and bounties from your combat logs, LP and ISK earnings, and cheat sheets for sites and missions.</p></div>
+          <div class="feature"><h3>Hauling</h3><p>Haul tasks and a route map.</p></div>
+          <div class="feature"><h3>Overlays</h3><p>Small always-on-top windows for mining and combat while you play.</p></div>
+          <div class="feature"><h3>And the rest</h3><p>Wallet, skills, todos, appraisals, a program launcher and backups of your EVE client settings.</p></div>
+          <div class="feature"><h3>Stays up to date</h3><p>Tells you when a new version is out, shows what changed, and installs it when you choose.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap two">
+        <div>
+          <h2>Install</h2>
+          <p class="sub">Takes about a minute.</p>
+          <ol class="steps">
+            <li><strong>Download</strong> <span class="mono">EveMachine-Setup.exe</span> with the button above.</li>
+            <li><strong>Run it.</strong> It installs for your Windows user only (no administrator prompt) and adds Start Menu and desktop shortcuts.</li>
+            <li><strong>Add a character.</strong> Click Add Character and log in on EVE Online's own website in your normal browser. Eve Machine never sees your password.</li>
+            <li><strong>Get the game data.</strong> On first launch the app offers to download CCP's latest static data (items, blueprints, map). It takes a minute.</li>
+          </ol>
+        </div>
+        <div class="aside">
+          <div class="note">
+            <strong>"Windows protected your PC"?</strong> The installer isn't code-signed yet, so Windows SmartScreen doesn't recognise it. Click <strong>More info</strong>, then <strong>Run anyway</strong>.
+          </div>
+          <div class="note" id="checksum-note" hidden>
+            <strong>Checksum (SHA-256)</strong> of <span class="mono" id="checksum-file"></span>:<br>
+            <span class="mono hash" id="checksum"></span><br>
+            Check it in PowerShell with <code>Get-FileHash .\EveMachine-Setup.exe</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="whats-new">
+      <div class="wrap">
+        <h2>What's new</h2>
+        <p class="sub" id="notes-title">The latest release.</p>
+        <div class="notes" id="notes"><p class="loading">Loading release notes…</p></div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap">
+        <h2>Privacy</h2>
+        <p class="sub">There is no Eve Machine server, account or analytics.</p>
+        <ul class="plain">
+          <li><strong>Everything stays on your computer:</strong> login tokens (encrypted with your Windows account), synced character data, settings and notes.</li>
+          <li><strong>You log in on CCP's website,</strong> so Eve Machine never sees your EVE password. You can revoke its access any time at <a href="https://community.eveonline.com/support/third-party-applications/">community.eveonline.com</a>.</li>
+          <li><strong>Game and chat logs</strong> are read on your computer for the features that use them, and never uploaded.</li>
+          <li><strong>The app talks directly to</strong> CCP's ESI and login servers, EVE Tycoon (prices), zKillboard (public kill stats in Local Intel), the EVE University wiki, Fuzzwork, Janice (only with your own API key) and GitHub (update checks).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="https://github.com/PeytonSch/EveMachine-releases/releases">Releases</a>
+        <a href="https://github.com/PeytonSch/EveMachine-releases/issues">Report a problem</a>
+      </div>
+      <p>EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf. CCP hf. has granted permission to Eve Machine to use EVE Online and all associated logos and designs for promotional and information purposes but does not endorse, and is not in any way affiliated with, Eve Machine. CCP is in no way responsible for the content on or functioning of this program, nor can it be liable for any damage arising from the use of this program.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Fills in the version, date, checksum and release notes from GitHub's public API. The page works
+    // without it: the Download button always points at the newest release's EveMachine-Setup.exe.
+    (function () {
+      var API = 'https://api.github.com/repos/PeytonSch/EveMachine-releases/releases/latest';
+      var notesEl = document.getElementById('notes');
+
+      function esc(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function inline(s) {
+        return esc(s)
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, '<a href="$2">$1</a>');
+      }
+      // Just enough Markdown for CHANGELOG.md sections: headings, bullets, paragraphs.
+      function renderNotes(md) {
+        var out = [], inList = false;
+        md.replace(/\r/g, '').split('\n').forEach(function (line) {
+          var t = line.trim();
+          var bullet = /^[-*]\s+(.*)$/.exec(t);
+          if (bullet) {
+            if (!inList) { out.push('<ul>'); inList = true; }
+            out.push('<li>' + inline(bullet[1]) + '</li>');
+            return;
+          }
+          if (inList) { out.push('</ul>'); inList = false; }
+          var heading = /^#{1,6}\s+(.*)$/.exec(t);
+          if (heading) out.push('<h3>' + inline(heading[1]) + '</h3>');
+          else if (t) out.push('<p>' + inline(t) + '</p>');
+        });
+        if (inList) out.push('</ul>');
+        return out.join('');
+      }
+      function showNotesFallback() {
+        notesEl.innerHTML = '<p class="loading">Release notes are on the <a href="https://github.com/PeytonSch/EveMachine-releases/releases">releases page</a>.</p>';
+      }
+
+      fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (rel) {
+          var version = String(rel.tag_name || '').replace(/^v/, '');
+          var date = rel.published_at ? new Date(rel.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+          var assets = rel.assets || [];
+          var installer = assets.filter(function (a) { return a.name === 'EveMachine-Setup.exe'; })[0];
+          var sizeMb = installer ? Math.round(installer.size / 1048576) + ' MB · ' : '';
+
+          if (version) {
+            document.getElementById('release-meta').innerHTML =
+              '<strong>Version ' + esc(version) + '</strong>' + (date ? ' · ' + esc(date) : '') +
+              ' · ' + sizeMb + 'Windows 10 and 11, 64-bit · Free';
+            document.getElementById('notes-title').textContent = 'Eve Machine ' + version + (date ? ', released ' + date : '') + '.';
+          }
+          if (installer && typeof installer.digest === 'string' && installer.digest.indexOf('sha256:') === 0) {
+            document.getElementById('checksum-file').textContent = installer.name;
+            document.getElementById('checksum').textContent = installer.digest.slice(7).toUpperCase();
+            document.getElementById('checksum-note').hidden = false;
+          }
+          if (rel.body && rel.body.trim()) notesEl.innerHTML = renderNotes(rel.body);
+          else showNotesFallback();
+        })
+        .catch(showNotesFallback);
+    })();
+  </script>
+</body>
+</html>

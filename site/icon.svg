@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141d35"/>
+      <stop offset="1" stop-color="#060912"/>
+    </linearGradient>
+    <linearGradient id="housing" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26314d"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffb08a"/>
+      <stop offset="0.35" stop-color="#ff4a3a"/>
+      <stop offset="0.8" stop-color="#c8141f"/>
+      <stop offset="1" stop-color="#7a0910"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="url(#tile)" stroke="#2a3a5c" stroke-width="4"/>
+
+  <polygon points="417,256 336.6,115.6 175.4,115.6 95,256 175.4,396.4 336.6,396.4"
+           fill="url(#housing)" stroke="#6a7c9e" stroke-width="9" stroke-linejoin="round"/>
+  <polygon points="380,256 318,148 194,148 132,256 194,364 318,364"
+           fill="none" stroke="#33415f" stroke-width="3" stroke-linejoin="round"/>
+
+  <line x1="95" y1="256" x2="128" y2="256" stroke="#8a9bb8" stroke-width="6" stroke-linecap="round"/>
+  <line x1="384" y1="256" x2="417" y2="256" stroke="#8a9bb8" stroke-width="6" stroke-linecap="round"/>
+
+  <ellipse cx="256" cy="256" rx="130" ry="82" fill="#04060c" stroke="#9fb0cc" stroke-width="6"/>
+
+  <circle cx="256" cy="256" r="71" fill="url(#iris)"/>
+  <circle cx="256" cy="256" r="71" fill="none" stroke="#ff7a5a" stroke-width="2" opacity="0.6"/>
+  <circle cx="256" cy="256" r="52" fill="none" stroke="#7a0910" stroke-width="2" opacity="0.7"/>
+
+  <polygon points="256,199 268.5,238 291.4,262.8 272.6,269.2 268.5,294 256,286 243.5,294 239.4,269.2 220.6,262.8 243.5,238"
+           fill="#04060c" stroke="#04060c" stroke-width="2" stroke-linejoin="round"/>
+
+  <circle cx="297" cy="214" r="9" fill="#ffe6d8"/>
+  <circle cx="310" cy="230" r="3.5" fill="#ffe6d8" opacity="0.7"/>
+</svg>
